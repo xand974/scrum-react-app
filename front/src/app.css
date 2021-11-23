@@ -36,6 +36,10 @@
   --width-x: 80%;
 }
 
+body {
+  font-family: "Urbanist", sans-serif;
+}
+
 /**GLOBAL STYLE**/
 a {
   text-decoration: none;

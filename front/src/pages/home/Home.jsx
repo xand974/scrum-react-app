@@ -1,5 +1,9 @@
+import Layout from "../../components/layout/Layout";
+import { auth } from "../../firebase";
 import "./home.scss";
 
 export default function Home() {
-  return <div>home</div>;
+  console.log(auth.currentUser);
+
+  return <Layout></Layout>;
 }
