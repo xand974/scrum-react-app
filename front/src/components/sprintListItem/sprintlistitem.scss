@@ -1,0 +1,35 @@
+.sprint-list-item {
+  flex-grow: 1;
+  height: 200px;
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  margin: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  background: var(--white);
+  border-radius: var(--spacing-sm);
+  box-shadow: var(--shadow-xsm);
+
+  &_title {
+    color: var(--dark-blue);
+  }
+  &_date {
+    margin: var(--spacing-sm) 0;
+    font-weight: lighter;
+  }
+  .links {
+    :nth-child(2) {
+      margin-left: 20px;
+    }
+    &-text {
+      font-size: 15px;
+      font-weight: lighter;
+      strong {
+        color: var(--dark-purple);
+      }
+    }
+  }
+}

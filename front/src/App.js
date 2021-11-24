@@ -7,23 +7,58 @@ import {
   Navigate,
 } from "react-router-dom";
 import PrivateRoutes from "./pages/privateRoutes/PrivateRoutes";
-import { useSelector } from "react-redux";
 import Login from "./pages/login/Login";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import Loading from "./components/loading/Loading";
+import Sprint from "./pages/sprint/Sprint";
+
 function App() {
-  const { currentUser } = useSelector((state) => state.user);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const unsubscribed = onAuthStateChanged(
+      auth,
+      (user) => {
+        if (user) {
+          setLoggedIn(true);
+          setIsLoading(true);
+        } else {
+          setLoggedIn(false);
+          setIsLoading(true);
+        }
+      },
+      (err) => alert(err)
+    );
+    return unsubscribed;
+  }, []);
+
+  if (!isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="app">
       <Router>
         <Routes>
           <Route
             path="/login"
-            element={currentUser ? <Navigate to="/" /> : <Login />}
+            element={loggedIn ? <Navigate to="/" /> : <Login />}
           />
           <Route
             path="/"
             element={
               <PrivateRoutes>
                 <Home />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/sprint/:id"
+            element={
+              <PrivateRoutes>
+                <Sprint />
               </PrivateRoutes>
             }
           />

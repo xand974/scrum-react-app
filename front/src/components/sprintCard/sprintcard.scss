@@ -1,0 +1,33 @@
+.sprint-card {
+  padding: var(--spacing-sm);
+  margin-right: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-xsm);
+  border-radius: 9px;
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .card-title {
+      font-weight: bold;
+      font-size: large;
+    }
+    .card-logo {
+      color: var(--light-gray);
+    }
+  }
+  &-body {
+    .sprint-card_title {
+      margin: 20px 0;
+    }
+    .card-users {
+      width: 10px;
+      display: flex;
+      align-items: center;
+      .card-img {
+        border-radius: 50%;
+      }
+    }
+  }
+}

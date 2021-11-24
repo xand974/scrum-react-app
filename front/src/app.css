@@ -29,11 +29,17 @@
   --dark-gray: #3c4550;
   --mid-gray: #8b939a;
   --light-gray: #bbbfc0;
+  --extralight-gray: #f1f1f1;
 
   /**NAVBAR**/
-  --padding-nav: 10px;
+  --spacing-sm: 10px;
+  --spacing-lg: 20px;
 
   --width-x: 80%;
+
+  --shadow-xsm: 0 0 10px rgba(0, 0, 0, 0.164);
+  --shadow-sm: 0 0 10px rgba(0, 0, 0, 0.418);
+  --shadow-lg: 0 0 20px rgba(0, 0, 0, 0.589);
 }
 
 body {

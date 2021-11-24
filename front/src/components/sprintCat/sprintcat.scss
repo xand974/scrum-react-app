@@ -1,0 +1,33 @@
+.sprint-cat {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  .top {
+    flex: 1;
+    .sprint-cat_text {
+      color: var(--white);
+      padding: 4px 5px;
+      border-radius: 9px;
+      text-align: center;
+      width: 50%;
+      font-size: 20px;
+      &.backlog {
+        background: var(--mid-blue);
+      }
+      &.pending {
+        background: var(--dark-purple);
+      }
+      &.check {
+        background: var(--dark-yellow);
+      }
+      &.fait {
+        background: var(--dark-green);
+      }
+    }
+  }
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    flex: 6;
+  }
+}
