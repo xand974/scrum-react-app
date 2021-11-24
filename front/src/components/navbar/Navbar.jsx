@@ -14,8 +14,12 @@ export default function Navbar() {
     <header>
       <nav className="nav">
         <div className="left">
-          <Brightness2Outlined fontSize="large" className="nav-icon" />
-          <h1 className="nav-title">SCRUM TOOL - MASTER 2 LEA NPI</h1>
+          <Link to="/" className="nav-link">
+            <Brightness2Outlined fontSize="large" className="nav-icon" />
+            <h1 className="nav-title">
+              Traductions de brochures - MASTER 2 LEA NPI
+            </h1>
+          </Link>
         </div>
         <div className="right">
           <div className="profile">

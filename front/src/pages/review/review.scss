@@ -1,0 +1,44 @@
+.review {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: scroll;
+  .review-display {
+    padding: 20px 0;
+    height: calc(100vh - 91px - 50px);
+    width: 40%;
+    font-family: "Courier New", Courier, monospace;
+    text-align: justify;
+  }
+  &-form {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 50vw;
+    .review-label {
+      font-size: 30px;
+      margin-bottom: var(--spacing-lg);
+      font-weight: lighter;
+      strong {
+        color: var(--dark-yellow);
+      }
+    }
+    .review-text-area {
+      height: 100%;
+      outline: none;
+      padding: 5px;
+      resize: none;
+      margin-bottom: var(--spacing-lg);
+    }
+    .review-btn {
+      width: 50%;
+      margin: auto;
+      padding: 3px 0;
+      background: none;
+      border: 1px solid var(--dark-blue);
+      color: var(--dark-blue);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+}

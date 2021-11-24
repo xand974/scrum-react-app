@@ -9,8 +9,10 @@ header {
     justify-content: space-between;
     padding: var(--spacing-lg) 0;
     .left {
-      display: flex;
-      align-items: center;
+      .nav-link {
+        display: flex;
+        align-items: center;
+      }
       .nav-icon {
         margin-right: var(--spacing-sm);
       }

@@ -1,0 +1,21 @@
+.footer {
+  padding: var(--spacing-sm) 0;
+  height: 50px;
+  border-top: 1px solid var(--light-gray);
+  .wrapper {
+    width: var(--width-x);
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h3 {
+      font-size: 30px;
+    }
+    p {
+      margin: 0 var(--spacing-lg);
+      font-weight: lighter;
+      color: var(--dark-gray);
+    }
+  }
+}

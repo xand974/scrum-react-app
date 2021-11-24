@@ -13,6 +13,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Loading from "./components/loading/Loading";
 import Sprint from "./pages/sprint/Sprint";
+import Create from "./pages/create/Create";
+import Review from "./pages/review/Review";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -59,6 +61,22 @@ function App() {
             element={
               <PrivateRoutes>
                 <Sprint />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/create"
+            element={
+              <PrivateRoutes>
+                <Create />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/review/:id"
+            element={
+              <PrivateRoutes>
+                <Review />
               </PrivateRoutes>
             }
           />

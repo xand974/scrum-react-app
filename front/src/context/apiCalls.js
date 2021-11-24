@@ -3,8 +3,23 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { auth, db } from "../firebase";
+import {
+  getSprintsFailure,
+  getSprintsSuccess,
+  getSprintsStart,
+  getSprint as getCurrentSprint,
+} from "./sprintSlice";
 
 export const register = async (email, password) => {
   try {
@@ -42,6 +57,69 @@ export const getUser = async (id, setUser) => {
     const docRef = doc(db, "users", id);
     const res = await getDoc(docRef);
     setUser(res.data());
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const createSprint = async (sprint, navigate) => {
+  try {
+    const docRef = collection(db, "sprints");
+
+    await addDoc(docRef, sprint);
+    navigate("/");
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const getSprints = async (dispatch) => {
+  dispatch(getSprintsStart());
+  try {
+    const docRef = collection(db, "sprints");
+    const res = await getDocs(docRef);
+    dispatch(
+      getSprintsSuccess(
+        res.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+      )
+    );
+  } catch (error) {
+    dispatch(getSprintsFailure());
+  }
+};
+
+export const createTask = async (task, id) => {
+  try {
+    const docRef = collection(db, "sprints", id, "tasks");
+    await addDoc(docRef, task);
+    window.location.reload();
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const getSprint = async (dispatch, id) => {
+  try {
+    const docRef = doc(db, "sprints", id);
+    const res = await getDoc(docRef);
+    dispatch(getCurrentSprint(res.data()));
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const getTaskByState = async (id, type, setTasks) => {
+  const colRef = collection(db, "sprints", id, "tasks");
+  const q = query(colRef, where("state", "==", type));
+  const res = await getDocs(q);
+  setTasks(res.docs.map((doc) => ({ id: doc.id, data: doc.data() })));
+};
+
+export const createReview = async (review, id) => {
+  try {
+    const docRef = doc(db, "sprints", id);
+    await setDoc(docRef, { review: review }, { merge: true });
+    window.location.reload();
   } catch (error) {
     alert(error);
   }

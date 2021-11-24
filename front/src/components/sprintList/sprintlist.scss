@@ -4,7 +4,7 @@
   .wrapper {
     margin: auto;
     padding: 20px 0;
-    height: calc(100vh - 91px);
+    height: calc(100vh - 91px - 50px);
     width: var(--width-x);
     overflow-y: scroll;
     overflow-x: hidden;
