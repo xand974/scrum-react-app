@@ -1,5 +1,11 @@
-import React from "react";
+import "./loading.scss";
 
 export default function Loading() {
-  return <div>loading</div>;
+  return (
+    <div className="loading">
+      <div className="point one"></div>
+      <div className="point two"></div>
+      <div className="point three"></div>
+    </div>
+  );
 }

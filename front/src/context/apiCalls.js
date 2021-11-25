@@ -12,6 +12,8 @@ import {
   getDocs,
   query,
   where,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import {
@@ -119,6 +121,50 @@ export const createReview = async (review, id) => {
   try {
     const docRef = doc(db, "sprints", id);
     await setDoc(docRef, { review: review }, { merge: true });
+    window.location.reload();
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const getUserWithJob = async (item, setUsers) => {
+  try {
+    let users = [];
+    const userDocRef = collection(db, "users");
+    const arr = await Promise.all(
+      item.team.map((item) => {
+        return getDocs(query(userDocRef, where("job", "==", item)));
+      })
+    );
+    // const payload = arr.map((a) => a.docs.map((doc) => ({ ...doc.data() })));
+    arr.map((a) => {
+      return a.forEach((item) => {
+        let currentId = item.id;
+        let obj = { ...item.data(), id: currentId };
+        users.push(obj);
+      });
+    });
+    setUsers(users);
+    // setUsers(...payload);
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const updateTask = async (sprintId, task, taskId) => {
+  try {
+    const docRef = doc(db, "sprints", sprintId, "tasks", taskId);
+    await updateDoc(docRef, task);
+    window.location.reload();
+  } catch (error) {
+    alert(error);
+  }
+};
+
+export const deleteTask = async (sprintId, taskId) => {
+  try {
+    const docRef = doc(db, "sprints", sprintId, "tasks", taskId);
+    await deleteDoc(docRef);
     window.location.reload();
   } catch (error) {
     alert(error);

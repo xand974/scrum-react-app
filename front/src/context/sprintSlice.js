@@ -7,6 +7,8 @@ export const sprintSlice = createSlice({
     sprint: [],
     pending: false,
     error: false,
+    openModal: false,
+    modalData: {},
   },
   reducers: {
     getSprintsStart: (state) => {
@@ -27,6 +29,12 @@ export const sprintSlice = createSlice({
         .find((s) => s.name === action.payload.name)
         .tasks.push(action.payload.task);
     },
+    setOpenModal: (state, action) => {
+      state.openModal = action.payload;
+    },
+    setModalData: (state, action) => {
+      state.modalData = action.payload;
+    },
   },
 });
 
@@ -36,6 +44,8 @@ export const {
   getSprintsSuccess,
   getSprintsFailure,
   addTask,
+  setOpenModal,
+  setModalData,
 } = sprintSlice.actions;
 
 export default sprintSlice.reducer;

@@ -2,10 +2,12 @@ import "./navbar.scss";
 import { Brightness2Outlined, AddOutlined } from "@mui/icons-material";
 import { auth } from "../../firebase";
 import { useEffect, useState } from "react";
-import { getUser } from "../../context/apiCalls";
-import { Link } from "react-router-dom";
+import { getUser, logout } from "../../context/apiCalls";
+import { Link, useNavigate } from "react-router-dom";
 export default function Navbar() {
   const [user, setUser] = useState(null);
+  const [hover, setHover] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUser(auth.currentUser.uid, setUser);
@@ -26,12 +28,31 @@ export default function Navbar() {
             <Link to="/create" className="profile-link">
               <AddOutlined className="profile-icon" color="info" />
             </Link>
-            <img
-              className="profile-img"
-              src={user?.PhotoURL}
-              alt="illustration de l'utilisateur"
-            />
-            <span className="profile-text">{user?.email}</span>
+            <div
+              className="dropdown"
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+            >
+              <img
+                className="profile-img"
+                src={user?.PhotoURL}
+                alt="illustration de l'utilisateur"
+              />
+              <span className="profile-text">{user?.email}</span>
+              <div className={`dropdown-items ${hover ? "active" : ""}`}>
+                <form
+                  className="logout-form"
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <button
+                    className="logout-btn"
+                    onClick={() => logout(navigate)}
+                  >
+                    Logout
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </nav>

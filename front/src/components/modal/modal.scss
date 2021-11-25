@@ -1,0 +1,114 @@
+.modal {
+  position: relative;
+  padding: var(--spacing-lg);
+
+  min-width: 300px;
+  width: 400px;
+  max-width: 500px;
+  height: 500px;
+  border-radius: 20px;
+
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  &.active {
+    pointer-events: all;
+    opacity: 1;
+    top: 50%;
+  }
+
+  &-header {
+    text-align: center;
+    margin: 15px;
+    font-weight: lighter;
+    text-decoration: underline var(--dark-blue);
+    color: var(--dark-blue);
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .modal-croix {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      border: none;
+      background: none;
+      .cancel-icon {
+        font-size: 35px;
+        cursor: pointer;
+      }
+    }
+  }
+  &-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      .modal-form-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: var(--spacing-lg);
+        .modal-label {
+          margin-bottom: var(--spacing-sm);
+          font-size: large;
+          letter-spacing: 2px;
+          font-weight: lighter;
+          color: var(--dark-blue);
+        }
+        .modal-input {
+          outline: none;
+          padding: var(--spacing-sm);
+          border: none;
+          border-bottom: 1px solid var(--dark-gray);
+          border-left: 1px solid var(--dark-gray);
+          font-size: 15px;
+          color: var(--dark-blue);
+        }
+      }
+      .current-state-text {
+        margin-bottom: 10px;
+        font-weight: lighter;
+        strong {
+          color: #ff2222;
+        }
+      }
+      .modal-select {
+        padding: 10px;
+        margin-bottom: var(--spacing-lg);
+        border: none;
+        border-left: 1px solid var(--dark-gray);
+        border-bottom: 1px solid var(--dark-gray);
+      }
+    }
+    .modal-form_btn {
+      padding: 5px;
+      border: 1px solid var(--dark-blue);
+      background: none;
+      font-size: 17px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      margin-bottom: var(--spacing-lg);
+      &.red {
+        background: #ff0909;
+        border: none;
+        padding: 7px;
+        color: var(--white);
+      }
+      &:hover {
+        color: var(--white);
+        background: #000;
+      }
+    }
+  }
+}

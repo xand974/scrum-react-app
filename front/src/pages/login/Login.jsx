@@ -4,7 +4,6 @@ import "./login.scss";
 
 export default function Login() {
   const [input, setInput] = useState({});
-
   const handleChange = (e) => {
     setInput((prev) => {
       return {
@@ -16,9 +15,9 @@ export default function Login() {
   const handleLogin = () => {
     login(input.email, input.password);
   };
-  const handleRegister = () => {
-    register(input.email, input.password);
-  };
+  // const handleRegister = () => {
+  //   register(input.email, input.password);
+  // };
   return (
     <section className="login">
       <div className="container">
@@ -34,7 +33,7 @@ export default function Login() {
               type="email"
               className="form-item_input"
               id="email"
-              placeholder="email@gmail.com"
+              placeholder="prenom@nom.fr"
             />
           </div>
           <div className="form-item">
@@ -47,15 +46,15 @@ export default function Login() {
               type="password"
               className="form-item_input"
               id="password"
-              placeholder="pass123."
+              placeholder="traduction"
             />
           </div>
           <button onClick={handleLogin} className="form-btn">
             Se connecter
           </button>
-          <button onClick={handleRegister} className="form-btn">
+          {/* <button onClick={handleRegister} className="form-btn">
             S'enregistrer
-          </button>
+          </button> */}
         </form>
       </div>
     </section>

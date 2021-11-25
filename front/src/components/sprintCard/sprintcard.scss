@@ -13,8 +13,13 @@
       font-weight: bold;
       font-size: large;
     }
-    .card-logo {
-      color: var(--light-gray);
+    .card-btn {
+      border: none;
+      background: none;
+      cursor: pointer;
+      .card-logo {
+        color: var(--light-gray);
+      }
     }
   }
   &-body {

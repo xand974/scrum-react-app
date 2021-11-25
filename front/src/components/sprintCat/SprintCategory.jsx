@@ -19,7 +19,7 @@ export default function SprintCategory({ type }) {
       </div>
       <div className="bottom">
         {tasks.map((item, key) => (
-          <SprintCard key={key} item={item.data} />
+          <SprintCard key={key} id={item.id} item={item.data} />
         ))}
       </div>
     </div>

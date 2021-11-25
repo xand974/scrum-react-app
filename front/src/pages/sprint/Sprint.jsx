@@ -5,6 +5,7 @@ import SprintCategory from "../../components/sprintCat/SprintCategory";
 import { useDispatch, useSelector } from "react-redux";
 import "./sprint.scss";
 import { createTask, getSprint } from "../../context/apiCalls";
+import Modal from "../../components/modal/Modal";
 
 export default function Sprint() {
   const [openAddTask, setOpenAddTask] = useState(false);
@@ -13,7 +14,6 @@ export default function Sprint() {
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
   const { sprint } = useSelector((state) => state.sprints);
-
   const handleChange = (e) => {
     setTask((prev) => {
       return {
@@ -48,6 +48,7 @@ export default function Sprint() {
   return (
     <Layout>
       <div className="sprint">
+        <Modal />
         <div className="top">
           <div className="wrapper">
             <div className="sprint-infos">
@@ -81,8 +82,8 @@ export default function Sprint() {
                     multiple
                     className="select"
                   >
-                    <option value="scrummaster">Scrum Master</option>
-                    <option value="productowner">Product Owner</option>
+                    <option value="scrumMaster">Scrum Master</option>
+                    <option value="productOwner">Product Owner</option>
                     <option value="rh">RH</option>
                     <option value="webdev">
                       Développement de la plateforme

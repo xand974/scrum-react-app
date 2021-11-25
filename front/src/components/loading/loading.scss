@@ -1,0 +1,34 @@
+.loading {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .point {
+    width: 20px;
+    height: 20px;
+    background: rgb(0, 0, 0);
+    margin: 0 var(--spacing-sm);
+    border-radius: 50%;
+    animation: load infinite 0.3s alternate;
+
+    @keyframes load {
+      from {
+        transform: translateY(20px);
+      }
+      to {
+        transform: translateY(0px);
+      }
+    }
+    &.one {
+      animation-delay: 0;
+    }
+    &.two {
+      animation-delay: 0.4s;
+    }
+    &.three {
+      animation-delay: 0.5s;
+    }
+  }
+}
