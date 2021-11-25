@@ -15,6 +15,7 @@ import Loading from "./components/loading/Loading";
 import Sprint from "./pages/sprint/Sprint";
 import Create from "./pages/create/Create";
 import Review from "./pages/review/Review";
+import NotFound from "./pages/notfound/NotFound";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -80,6 +81,7 @@ function App() {
               </PrivateRoutes>
             }
           />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
     </div>

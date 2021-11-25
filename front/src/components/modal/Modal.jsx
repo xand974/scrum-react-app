@@ -73,7 +73,7 @@ export default function Modal() {
             <option value="backlog">Backlog</option>
             <option value="pending">Pending</option>
             <option value="check">Check</option>
-            <option value="done">Fait</option>
+            <option value="fait">Fait</option>
           </select>
           <button
             className="modal-form_btn"
