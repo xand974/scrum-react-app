@@ -22,6 +22,7 @@ export default function SprintCategory({ type }) {
           <SprintCard key={key} id={item.id} item={item.data} />
         ))}
       </div>
+      <div className="transparent-container"></div>
     </div>
   );
 }

@@ -9,11 +9,11 @@ export default function Create() {
     name: "",
     from: "",
     to: "",
-    // createdAt: new Date(Date.now()).toLocaleDateString("fr-FR", {
-    //   day: "2-digit",
-    //   month: "long",
-    //   year: "numeric",
-    // }),
+    createdAt: new Date(Date.now()).toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }),
   });
   const navigate = useNavigate();
 

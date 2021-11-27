@@ -14,6 +14,7 @@ import {
   where,
   updateDoc,
   deleteDoc,
+  orderBy,
 } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import {
@@ -79,7 +80,8 @@ export const getSprints = async (dispatch) => {
   dispatch(getSprintsStart());
   try {
     const docRef = collection(db, "sprints");
-    const res = await getDocs(docRef);
+    const q = query(docRef, orderBy("createdAt", "desc"));
+    const res = await getDocs(q);
     dispatch(
       getSprintsSuccess(
         res.docs.map((doc) => ({ id: doc.id, data: doc.data() }))

@@ -1,3 +1,5 @@
+@import "../../app.scss";
+
 header {
   width: 100%;
   border-bottom: 1px solid var(--light-gray);
@@ -19,6 +21,10 @@ header {
       .nav-title {
         font-weight: normal;
         color: var(--dark-blue);
+
+        @include tablet {
+          display: none;
+        }
       }
     }
     .right {
@@ -31,6 +37,9 @@ header {
           margin-right: var(--spacing-lg);
           border-radius: 50%;
           box-shadow: 0 0 2px var(--dark-blue);
+          @include mobile {
+            margin-right: var(--spacing-sm);
+          }
         }
         .dropdown {
           display: flex;
@@ -78,6 +87,9 @@ header {
             color: var(--dark-gray);
             font-weight: bold;
             margin-left: var(--spacing-sm);
+            @include mobile {
+              margin: 0;
+            }
           }
         }
       }

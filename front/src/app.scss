@@ -61,3 +61,18 @@ li {
   width: 100vw;
   overflow: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+@mixin tablet {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media screen and (max-width: 425px) {
+    @content;
+  }
+}

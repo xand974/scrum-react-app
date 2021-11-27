@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
   .top {
     flex: 1;
     .sprint-cat_text {
@@ -29,5 +30,30 @@
     display: flex;
     flex-direction: column;
     flex: 6;
+  }
+  .transparent-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 23%,
+      rgba(255, 255, 255, 1) 53%,
+      rgba(255, 255, 255, 0.44441526610644255) 90%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.8729866946778712) 13%,
+      rgba(255, 255, 255, 0.7665441176470589) 36%,
+      rgba(255, 255, 255, 0.7133228291316527) 53%,
+      rgba(255, 255, 255, 0.396796218487395) 72%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
 }

@@ -1,4 +1,4 @@
-import "./app.css";
+import "./app.scss";
 import Home from "./pages/home/Home";
 import {
   BrowserRouter as Router,
