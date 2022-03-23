@@ -4,13 +4,14 @@ import { auth } from "../../firebase";
 import { useEffect, useState } from "react";
 import { getUser, logout } from "../../context/apiCalls";
 import { Link, useNavigate } from "react-router-dom";
+import { UserModel } from "../../types/index";
 export default function Navbar() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserModel | null>(null);
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUser(auth.currentUser.uid, setUser);
+    if (auth !== null) getUser(auth?.currentUser?.uid!!, setUser);
   }, []);
   return (
     <header>

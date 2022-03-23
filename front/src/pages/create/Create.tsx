@@ -1,11 +1,12 @@
 import "./create.scss";
 import Layout from "../../components/layout/Layout";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { createSprint } from "../../context/apiCalls";
 import { useNavigate } from "react-router";
+import { SprintModel } from "../../types/index";
 
 export default function Create() {
-  const [sprint, setSprint] = useState({
+  const [sprint, setSprint] = useState<SprintModel>({
     name: "",
     from: "",
     to: "",
@@ -14,10 +15,11 @@ export default function Create() {
       month: "long",
       year: "numeric",
     }),
+    tasks: [],
   });
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSprint((prev) => {
       return {
         ...prev,

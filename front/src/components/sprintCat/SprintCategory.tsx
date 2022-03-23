@@ -3,8 +3,10 @@ import SprintCard from "../sprintCard/SprintCard";
 import { useEffect, useState } from "react";
 import { getTaskByState } from "../../context/apiCalls";
 import { useLocation } from "react-router";
-export default function SprintCategory({ type }) {
-  const [tasks, setTasks] = useState([]);
+import { TaskModel } from "../../types/index";
+
+export default function SprintCategory({ type }: { type: string }) {
+  const [tasks, setTasks] = useState<TaskModel[]>([]);
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
 
@@ -19,7 +21,7 @@ export default function SprintCategory({ type }) {
       </div>
       <div className="bottom">
         {tasks.map((item, key) => (
-          <SprintCard key={key} id={item.id} item={item.data} />
+          <SprintCard key={key} id={item?.id} item={item} />
         ))}
       </div>
       <div className="transparent-container"></div>

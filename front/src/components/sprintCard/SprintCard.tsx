@@ -4,9 +4,14 @@ import { useEffect, useState } from "react";
 import { getUserWithJob } from "../../context/apiCalls";
 import { setModalData, setOpenModal } from "../../context/sprintSlice";
 import { useDispatch } from "react-redux";
+import { TaskModel, UserModel } from "../../types/index";
 
-export default function SprintCard({ item, id }) {
-  const [users, setUsers] = useState([]);
+type SprintCardType = {
+  item: TaskModel;
+  id?: string;
+};
+export default function SprintCard({ item, id }: SprintCardType) {
+  const [users, setUsers] = useState<UserModel[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,9 +24,9 @@ export default function SprintCard({ item, id }) {
   };
 
   return (
-    <div className="sprint-card">
+    <div className="sprint-card" draggable>
       <div className="sprint-card-header">
-        <p className="card-title">{item.job}</p>
+        <p className="card-title">{item?.job}</p>
         <button className="card-btn" onClick={handleOpenModal}>
           <EditOutlined className="card-logo" />
         </button>
@@ -29,17 +34,18 @@ export default function SprintCard({ item, id }) {
       <div className="sprint-card-body">
         <p className="sprint-card_title">{item.task}</p>
         <div className="card-users">
-          {users?.map((user, key) => (
-            <img
-              key={key}
-              width="30"
-              height="30"
-              className="card-img"
-              src={user?.PhotoURL}
-              alt="utilisateur travaillant pour le sprint"
-              style={{ transform: `translateX(-${10 * key}px)` }}
-            />
-          ))}
+          {users &&
+            users?.map((user, key) => (
+              <img
+                key={key}
+                width="30"
+                height="30"
+                className="card-img"
+                src={user?.PhotoURL}
+                alt="utilisateur travaillant pour le sprint"
+                style={{ transform: `translateX(-${10 * key}px)` }}
+              />
+            ))}
         </div>
       </div>
     </div>

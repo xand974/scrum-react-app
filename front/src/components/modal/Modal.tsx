@@ -1,20 +1,27 @@
 import { Cancel } from "@mui/icons-material";
 import "./modal.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setOpenModal } from "../../context/sprintSlice";
 import { deleteTask, updateTask } from "../../context/apiCalls";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useLocation } from "react-router";
+import { useAppSelector } from "../../hook";
+import { TaskModel } from "../../types/index";
 export default function Modal() {
   const dispatch = useDispatch();
-  const { modalData, openModal } = useSelector((state) => state.sprints);
-  const [updatedTask, setUpdatedTask] = useState({});
+  const { modalData, openModal }: { modalData: TaskModel; openModal: boolean } =
+    useAppSelector((state) => state.sprints);
+  const [updatedTask, setUpdatedTask] = useState({} as TaskModel);
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
 
-  console.log(SPRINT_ID);
+  if (modalData.state) {
+    updatedTask.state = modalData.state;
+  }
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setUpdatedTask((prev) => {
       return {
         ...prev,
@@ -65,6 +72,7 @@ export default function Modal() {
             current state : <strong>{modalData?.state}</strong>
           </span>
           <select
+            defaultValue={modalData.state ? modalData.state : "backlog"}
             name="state"
             id="state"
             onChange={handleChange}
@@ -77,13 +85,13 @@ export default function Modal() {
           </select>
           <button
             className="modal-form_btn"
-            onClick={() => updateTask(SPRINT_ID, updatedTask, modalData.id)}
+            onClick={() => updateTask(SPRINT_ID, updatedTask, modalData.id!!)}
           >
             Mettre à jour
           </button>
           <button
             className="modal-form_btn red"
-            onClick={() => deleteTask(SPRINT_ID, modalData.id)}
+            onClick={() => deleteTask(SPRINT_ID, modalData.id!!)}
           >
             Supprimer
           </button>

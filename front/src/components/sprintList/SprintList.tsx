@@ -1,10 +1,12 @@
 import "./sprintlist.scss";
 import SprintListItem from "../sprintListItem/SprintListItem";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getSprints } from "../../context/apiCalls";
+import { useAppSelector } from "../../hook";
+
 export default function SprintList() {
-  const { sprints } = useSelector((state) => state.sprints);
+  const { sprints } = useAppSelector((state) => state.sprints);
   const dispatch = useDispatch();
 
   useEffect(() => {

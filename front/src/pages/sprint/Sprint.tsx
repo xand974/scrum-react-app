@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import SprintCategory from "../../components/sprintCat/SprintCategory";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./sprint.scss";
 import { createTask, getSprint } from "../../context/apiCalls";
 import Modal from "../../components/modal/Modal";
+import { useAppSelector } from "../../hook";
+import { TaskModel } from "../../types/index";
 
 export default function Sprint() {
   const [openAddTask, setOpenAddTask] = useState(false);
-  const [task, setTask] = useState({});
+  const [task, setTask] = useState({} as TaskModel);
   const dispatch = useDispatch();
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
-  const { sprint } = useSelector((state) => state.sprints);
-  const handleChange = (e) => {
+  const { sprint } = useAppSelector((state) => state.sprints);
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setTask((prev) => {
       return {
         ...prev,
@@ -23,7 +27,7 @@ export default function Sprint() {
     });
   };
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     let value = Array.from(
       e.target.selectedOptions,
       (options) => options.value
@@ -42,6 +46,9 @@ export default function Sprint() {
   }, [dispatch, SPRINT_ID, task]);
 
   const handleClick = () => {
+    if (!task.state) {
+      task.state = "backlog";
+    }
     createTask(task, SPRINT_ID);
   };
 
@@ -97,6 +104,7 @@ export default function Sprint() {
                     name="state"
                     id=""
                     className="select"
+                    defaultValue="backlog"
                   >
                     <option value="">selectionner</option>
                     <option value="backlog">Backlog</option>

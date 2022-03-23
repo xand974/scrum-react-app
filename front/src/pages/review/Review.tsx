@@ -1,15 +1,16 @@
 import { SendOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import Layout from "../../components/layout/Layout";
 import { createReview, getSprint } from "../../context/apiCalls";
 import "./review.scss";
+import { useAppSelector } from "../../hook";
 
 export default function Review() {
   const [review, setReview] = useState("");
   const location = useLocation();
-  const { sprint } = useSelector((state) => state.sprints);
+  const { sprint } = useAppSelector((state) => state.sprints);
   const SPRINT_ID = location.pathname.split("/")[2];
   const dispatch = useDispatch();
 

@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { login, register } from "../../context/apiCalls";
+import { useState, ChangeEvent } from "react";
+import { login } from "../../context/apiCalls";
 import "./login.scss";
 
 export default function Login() {
-  const [input, setInput] = useState({});
-  const handleChange = (e) => {
+  const [input, setInput] = useState<{ email: string; password: string }>({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput((prev) => {
       return {
         ...prev,
