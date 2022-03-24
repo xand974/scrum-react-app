@@ -38,14 +38,26 @@ export const sprintSlice = createSlice({
       state,
       action: PayloadAction<{ sprintName: string; task: TaskModel }>
     ) => {
-      if (state.sprint?.tasks)
+      if (state.sprint?.tasks) {
         state.sprint.tasks = [...state.sprint.tasks, action.payload.task];
+      } else {
+        state.sprint.tasks = [{ ...action.payload.task }];
+      }
     },
     removeTask: (state, action: PayloadAction<string>) => {
       state.sprint.tasks = state.sprint.tasks?.filter(
         (task) => task.id !== action.payload
       );
     },
+    // TODO gérer la fonction update en évitant de muter les données
+    setUpdateTask: (state, action: PayloadAction<Partial<TaskModel>>) => {
+      const taskFound = state.sprint.tasks?.find(
+        (task) => task.id === action.payload.id
+      );
+      if (taskFound)
+        state.sprint.tasks?.map((task) => [{ ...task }, { ...action.payload }]);
+    },
+
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
@@ -60,6 +72,7 @@ export const {
   setAddTask,
   removeTask,
   setLoading,
+  setUpdateTask,
 } = sprintSlice.actions;
 
 export default sprintSlice.reducer;

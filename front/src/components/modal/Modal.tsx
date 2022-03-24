@@ -1,8 +1,8 @@
-import { Cancel } from "@mui/icons-material";
 import "./modal.scss";
+import { Cancel } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { setOpenModal } from "../../context/modalSlice";
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent, useState } from "react";
 import { useLocation } from "react-router";
 import { useAppSelector } from "../../hook";
 import { TaskModel } from "../../types/index";
@@ -85,7 +85,7 @@ export default function Modal() {
           </select>
           <button
             className="modal-form_btn"
-            onClick={() => updateTask(SPRINT_ID, updatedTask)}
+            onClick={() => updateTask(SPRINT_ID, updatedTask, dispatch)}
           >
             Mettre à jour
           </button>

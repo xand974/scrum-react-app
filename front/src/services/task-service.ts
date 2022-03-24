@@ -2,7 +2,12 @@ import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { TaskModel, SprintModel } from "../types/index";
 import { AppDispatch } from "../context/store";
-import { removeTask, setAddTask, setLoading } from "../context/sprintSlice";
+import {
+  removeTask,
+  setAddTask,
+  setLoading,
+  setUpdateTask,
+} from "../context/sprintSlice";
 import { setDoc } from "firebase/firestore";
 import { setOpenModal } from "../context/modalSlice";
 
@@ -29,11 +34,17 @@ export const createTask = async (
  * @param {TaskModel} task
  * @param {string} taskId
  */
-export const updateTask = async (sprintId: string, task: any) => {
+export const updateTask = async (
+  sprintId: string,
+  task: Partial<TaskModel>,
+  dispatch: AppDispatch
+) => {
   try {
+    dispatch(setLoading(true));
     const docRef = doc(db, "sprints", sprintId);
     await updateDoc(docRef, { tasks: task });
-    window.location.reload();
+    dispatch(setUpdateTask(task));
+    dispatch(setLoading(false));
   } catch (error) {
     throw error;
   }
@@ -45,7 +56,7 @@ export const deleteTask = async (
   dispatch: AppDispatch
 ): Promise<void> => {
   try {
-    dispatch(setLoading(false));
+    dispatch(setLoading(true));
     const docRef = doc(db, "sprints", sprintId);
     const sprint = (await (await getDoc(docRef)).data()) as SprintModel;
     await updateDoc(docRef, {
