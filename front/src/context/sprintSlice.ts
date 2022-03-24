@@ -6,9 +6,11 @@ type State = {
   sprint: SprintModel;
   pending: boolean;
   error: boolean;
+  loading: boolean;
 };
 
 const initialState: State = {
+  loading: false,
   sprints: [],
   sprint: {} as SprintModel,
   pending: false,
@@ -41,8 +43,11 @@ export const sprintSlice = createSlice({
     },
     removeTask: (state, action: PayloadAction<string>) => {
       state.sprint.tasks = state.sprint.tasks?.filter(
-        (task) => task.id === action.payload
+        (task) => task.id !== action.payload
       );
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
 });
@@ -54,6 +59,7 @@ export const {
   getSprintsFailure,
   setAddTask,
   removeTask,
+  setLoading,
 } = sprintSlice.actions;
 
 export default sprintSlice.reducer;

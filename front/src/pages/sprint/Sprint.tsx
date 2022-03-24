@@ -10,6 +10,7 @@ import { TaskModel } from "../../types/index";
 import AddTask from "./components/AddTask";
 import { getSprint } from "../../services/sprint-service";
 import { createTask } from "../../services/task-service";
+import Loading from "../../components/loading/Loading";
 
 export default function Sprint() {
   const [openAddTask, setOpenAddTask] = useState(false);
@@ -19,7 +20,7 @@ export default function Sprint() {
   const dispatch = useDispatch();
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
-  const { sprint } = useAppSelector((state) => state.sprints);
+  const { sprint, loading } = useAppSelector((state) => state.sprints);
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -55,6 +56,10 @@ export default function Sprint() {
     }
     createTask(sprint, task, SPRINT_ID, dispatch);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Layout>

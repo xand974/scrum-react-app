@@ -53,7 +53,6 @@ export const getSprint = async (dispatch: AppDispatch, id: string) => {
   try {
     const docRef = doc(db, "sprints", id);
     const res = await getDoc(docRef);
-    console.log(res.data());
 
     dispatch(getCurrentSprint(res.data() as SprintModel));
   } catch (error) {

@@ -19,8 +19,6 @@ export default function Modal() {
     updatedTask.state = modalData.state;
   }
 
-  console.log(modalData.id);
-
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -87,7 +85,7 @@ export default function Modal() {
           </select>
           <button
             className="modal-form_btn"
-            onClick={() => updateTask(SPRINT_ID, updatedTask, modalData.id!!)}
+            onClick={() => updateTask(SPRINT_ID, updatedTask)}
           >
             Mettre à jour
           </button>
