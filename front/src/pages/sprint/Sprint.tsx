@@ -1,17 +1,21 @@
+import "./sprint.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import SprintCategory from "../../components/sprintCat/SprintCategory";
 import { useDispatch } from "react-redux";
-import "./sprint.scss";
-import { createTask, getSprint } from "../../context/apiCalls";
 import Modal from "../../components/modal/Modal";
 import { useAppSelector } from "../../hook";
 import { TaskModel } from "../../types/index";
+import AddTask from "./components/AddTask";
+import { getSprint } from "../../services/sprint-service";
+import { createTask } from "../../services/task-service";
 
 export default function Sprint() {
   const [openAddTask, setOpenAddTask] = useState(false);
-  const [task, setTask] = useState({} as TaskModel);
+  const [task, setTask] = useState({
+    id: new Date().getTime().toString(),
+  } as TaskModel);
   const dispatch = useDispatch();
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
@@ -43,13 +47,13 @@ export default function Sprint() {
 
   useEffect(() => {
     getSprint(dispatch, SPRINT_ID);
-  }, [dispatch, SPRINT_ID, task]);
+  }, [dispatch, SPRINT_ID]);
 
   const handleClick = () => {
     if (!task.state) {
       task.state = "backlog";
     }
-    createTask(task, SPRINT_ID);
+    createTask(sprint, task, SPRINT_ID, dispatch);
   };
 
   return (
@@ -64,58 +68,11 @@ export default function Sprint() {
               </p>
               <h1 className="sprint-infos_title">{sprint.name}</h1>
               {openAddTask ? (
-                <form
-                  className="add-task-form"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <input
-                    className="add-task-input"
-                    type="text"
-                    placeholder="ex :meeting avec les clients"
-                    name="task"
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="add-task-input"
-                    type="text"
-                    placeholder="ex: UX Designer"
-                    name="job"
-                    onChange={handleChange}
-                  />
-                  <select
-                    onChange={handleSelect}
-                    name="team"
-                    id=""
-                    multiple
-                    className="select"
-                  >
-                    <option value="scrumMaster">Scrum Master</option>
-                    <option value="productOwner">Product Owner</option>
-                    <option value="rh">RH</option>
-                    <option value="webdev">
-                      Développement de la plateforme
-                    </option>
-                    <option value="digital">Digital management</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="communication">Communication</option>
-                  </select>
-                  <select
-                    onChange={handleChange}
-                    name="state"
-                    id=""
-                    className="select"
-                    defaultValue="backlog"
-                  >
-                    <option value="">selectionner</option>
-                    <option value="backlog">Backlog</option>
-                    <option value="pending">Pending</option>
-                    <option value="check">Check</option>
-                    <option value="fait">Fait</option>
-                  </select>
-                  <button className="add-task-btn" onClick={handleClick}>
-                    Ajouter
-                  </button>
-                </form>
+                <AddTask
+                  handleChange={handleChange}
+                  handleClick={handleClick}
+                  handleSelect={handleSelect}
+                />
               ) : (
                 <button
                   className="add-btn"

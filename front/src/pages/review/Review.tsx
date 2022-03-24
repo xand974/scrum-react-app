@@ -1,11 +1,11 @@
-import { SendOutlined } from "@mui/icons-material";
+import "./review.scss";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import Layout from "../../components/layout/Layout";
-import { createReview, getSprint } from "../../context/apiCalls";
-import "./review.scss";
 import { useAppSelector } from "../../hook";
+import AddReview from "./components/AddReview";
+import { getSprint, createReview } from "../../services/sprint-service";
 
 export default function Review() {
   const [review, setReview] = useState("");
@@ -28,20 +28,7 @@ export default function Review() {
         {sprint.review ? (
           <div className="review-display">{sprint.review}</div>
         ) : (
-          <form className="review-form" onSubmit={(e) => e.preventDefault()}>
-            <label htmlFor="review" className="review-label">
-              Review pour <strong>Product Detailed</strong>
-            </label>
-            <textarea
-              name="review"
-              id="review"
-              className="review-text-area"
-              onChange={(e) => setReview(e.target.value)}
-            ></textarea>
-            <button className="review-btn" onClick={handleCreate}>
-              <SendOutlined />
-            </button>
-          </form>
+          <AddReview handleCreate={handleCreate} setReview={setReview} />
         )}
       </div>
     </Layout>

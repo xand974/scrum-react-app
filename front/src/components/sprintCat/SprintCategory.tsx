@@ -1,18 +1,26 @@
 import "./sprintcat.scss";
 import SprintCard from "../sprintCard/SprintCard";
 import { useEffect, useState } from "react";
-import { getTaskByState } from "../../context/apiCalls";
-import { useLocation } from "react-router";
 import { TaskModel } from "../../types/index";
+import { useAppSelector } from "../../hook";
 
 export default function SprintCategory({ type }: { type: string }) {
   const [tasks, setTasks] = useState<TaskModel[]>([]);
-  const location = useLocation();
-  const SPRINT_ID = location.pathname.split("/")[2];
+  const { sprint } = useAppSelector((state) => state.sprints);
 
   useEffect(() => {
-    getTaskByState(SPRINT_ID, type, setTasks);
-  }, [type, SPRINT_ID]);
+    const getTaskByState = (type: string): TaskModel[] => {
+      let res: TaskModel[] = [];
+      if (sprint.tasks)
+        for (const task of sprint?.tasks) {
+          if (task.state === type) {
+            res.push(task);
+          }
+        }
+      return res;
+    };
+    setTasks(getTaskByState(type));
+  }, [type, sprint]);
 
   return (
     <div className="sprint-cat">

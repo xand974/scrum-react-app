@@ -1,8 +1,8 @@
 import "./sprintcard.scss";
 import { EditOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { getUserWithJob } from "../../context/apiCalls";
-import { setModalData, setOpenModal } from "../../context/sprintSlice";
+import { getUserWithJob } from "../../services/user-service";
+import { setModalData, setOpenModal } from "../../context/modalSlice";
 import { useDispatch } from "react-redux";
 import { TaskModel, UserModel } from "../../types/index";
 

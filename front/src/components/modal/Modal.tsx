@@ -1,16 +1,16 @@
 import { Cancel } from "@mui/icons-material";
 import "./modal.scss";
 import { useDispatch } from "react-redux";
-import { setOpenModal } from "../../context/sprintSlice";
-import { deleteTask, updateTask } from "../../context/apiCalls";
-import { ChangeEvent, useState } from "react";
+import { setOpenModal } from "../../context/modalSlice";
+import { ChangeEvent, useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { useAppSelector } from "../../hook";
 import { TaskModel } from "../../types/index";
+import { updateTask, deleteTask } from "../../services/task-service";
 export default function Modal() {
   const dispatch = useDispatch();
   const { modalData, openModal }: { modalData: TaskModel; openModal: boolean } =
-    useAppSelector((state) => state.sprints);
+    useAppSelector((state) => state.modal);
   const [updatedTask, setUpdatedTask] = useState({} as TaskModel);
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
@@ -18,6 +18,8 @@ export default function Modal() {
   if (modalData.state) {
     updatedTask.state = modalData.state;
   }
+
+  console.log(modalData.id);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -91,7 +93,7 @@ export default function Modal() {
           </button>
           <button
             className="modal-form_btn red"
-            onClick={() => deleteTask(SPRINT_ID, modalData.id!!)}
+            onClick={() => deleteTask(SPRINT_ID, modalData.id!!, dispatch)}
           >
             Supprimer
           </button>

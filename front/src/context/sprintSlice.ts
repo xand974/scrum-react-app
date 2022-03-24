@@ -6,8 +6,6 @@ type State = {
   sprint: SprintModel;
   pending: boolean;
   error: boolean;
-  openModal: boolean;
-  modalData: any;
 };
 
 const initialState: State = {
@@ -15,8 +13,6 @@ const initialState: State = {
   sprint: {} as SprintModel,
   pending: false,
   error: false,
-  openModal: false,
-  modalData: {},
 };
 
 export const sprintSlice = createSlice({
@@ -27,7 +23,7 @@ export const sprintSlice = createSlice({
       state.pending = true;
     },
     getSprintsSuccess: (state, action: PayloadAction<SprintModel[]>) => {
-      state.sprints = action.payload;
+      state.sprints = [...action.payload];
     },
     getSprintsFailure: (state) => {
       state.pending = false;
@@ -36,20 +32,17 @@ export const sprintSlice = createSlice({
     getSprint: (state, action) => {
       state.sprint = action.payload;
     },
-    addTask: (
+    setAddTask: (
       state,
-      action: PayloadAction<{ name: string; task: TaskModel }>
+      action: PayloadAction<{ sprintName: string; task: TaskModel }>
     ) => {
-      const sprintFound = state.sprints?.find(
-        (s: any) => s.name === action.payload.name
+      if (state.sprint?.tasks)
+        state.sprint.tasks = [...state.sprint.tasks, action.payload.task];
+    },
+    removeTask: (state, action: PayloadAction<string>) => {
+      state.sprint.tasks = state.sprint.tasks?.filter(
+        (task) => task.id === action.payload
       );
-      sprintFound?.tasks?.push(action.payload.task);
-    },
-    setOpenModal: (state, action) => {
-      state.openModal = action.payload;
-    },
-    setModalData: (state, action) => {
-      state.modalData = action.payload;
     },
   },
 });
@@ -59,9 +52,8 @@ export const {
   getSprintsStart,
   getSprintsSuccess,
   getSprintsFailure,
-  addTask,
-  setOpenModal,
-  setModalData,
+  setAddTask,
+  removeTask,
 } = sprintSlice.actions;
 
 export default sprintSlice.reducer;

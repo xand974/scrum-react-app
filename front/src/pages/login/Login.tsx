@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from "react";
-import { login } from "../../context/apiCalls";
+import { login } from "../../services/login-service";
 import "./login.scss";
 
 export default function Login() {

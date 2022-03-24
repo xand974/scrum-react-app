@@ -2,7 +2,8 @@ import "./navbar.scss";
 import { Brightness2Outlined, AddOutlined } from "@mui/icons-material";
 import { auth } from "../../firebase";
 import { useEffect, useState } from "react";
-import { getUser, logout } from "../../context/apiCalls";
+import { getUser } from "../../services/user-service";
+import { logout } from "../../services/login-service";
 import { Link, useNavigate } from "react-router-dom";
 import { UserModel } from "../../types/index";
 export default function Navbar() {
