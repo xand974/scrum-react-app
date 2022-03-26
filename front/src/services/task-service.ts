@@ -12,16 +12,19 @@ import { setDoc } from "firebase/firestore";
 import { setOpenModal } from "../context/modalSlice";
 
 export const createTask = async (
-  sprint: SprintModel,
+  sprintName: string,
   task: TaskModel,
   id: string,
   dispatch: AppDispatch
 ) => {
   try {
+    if (!task.id) {
+      task.id = Math.random().toString(36).slice(2);
+    }
     dispatch(setLoading(true));
     const docRef = doc(db, "sprints", id);
     await setDoc(docRef, { tasks: arrayUnion(task) }, { merge: true });
-    dispatch(setAddTask({ sprintName: sprint.name, task }));
+    dispatch(setAddTask({ sprintName: sprintName, task }));
     dispatch(setLoading(false));
   } catch (error) {
     throw error;
@@ -36,18 +39,33 @@ export const createTask = async (
  */
 export const updateTask = async (
   sprintId: string,
-  task: Partial<TaskModel>,
+  task: TaskModel,
   dispatch: AppDispatch
 ) => {
   try {
     dispatch(setLoading(true));
     const docRef = doc(db, "sprints", sprintId);
-    await updateDoc(docRef, { tasks: task });
+    const res = await getDoc(docRef);
+    const sprint = { id: res.id, ...res.data() } as SprintModel;
+    const newTasks = setNewTask(sprint, task);
+    await updateDoc(docRef, { tasks: newTasks });
     dispatch(setUpdateTask(task));
     dispatch(setLoading(false));
+    dispatch(setOpenModal(false));
   } catch (error) {
     throw error;
   }
+};
+
+const setNewTask = (sprint: SprintModel, task: TaskModel) => {
+  const newTasks =
+    sprint.tasks?.map((item) => {
+      if (item.id === task.id) {
+        return { ...item, ...task };
+      }
+      return item;
+    }) ?? [];
+  return newTasks;
 };
 
 export const deleteTask = async (

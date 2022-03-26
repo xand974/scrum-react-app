@@ -6,13 +6,14 @@ export interface SprintModel {
   to: string;
   review?: string;
   tasks?: TaskModel[];
+  states: string[];
 }
 
 export interface TaskModel {
   id?: string;
   job: string;
-  state: "pending" | "fait" | "backlog" | "check";
-  task: string;
+  state: string;
+  name: string;
   team: string[];
 }
 

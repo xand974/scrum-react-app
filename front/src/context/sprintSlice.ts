@@ -3,7 +3,6 @@ import { TaskModel, SprintModel } from "../types/index";
 
 type State = {
   sprints: SprintModel[];
-  sprint: SprintModel;
   pending: boolean;
   error: boolean;
   loading: boolean;
@@ -12,7 +11,6 @@ type State = {
 const initialState: State = {
   loading: false,
   sprints: [],
-  sprint: {} as SprintModel,
   pending: false,
   error: false,
 };
@@ -31,31 +29,41 @@ export const sprintSlice = createSlice({
       state.pending = false;
       state.error = true;
     },
-    getSprint: (state, action) => {
-      state.sprint = action.payload;
-    },
     setAddTask: (
       state,
       action: PayloadAction<{ sprintName: string; task: TaskModel }>
     ) => {
-      if (state.sprint?.tasks) {
-        state.sprint.tasks = [...state.sprint.tasks, action.payload.task];
-      } else {
-        state.sprint.tasks = [{ ...action.payload.task }];
-      }
+      const sprints = state.sprints.map((sprint) => {
+        if (sprint.name === action.payload.sprintName) {
+          return {
+            ...sprint,
+            tasks: [...(sprint.tasks ?? []), action.payload.task],
+          };
+        }
+        return sprint;
+      });
+      return { ...state, sprints };
     },
-    removeTask: (state, action: PayloadAction<string>) => {
-      state.sprint.tasks = state.sprint.tasks?.filter(
-        (task) => task.id !== action.payload
-      );
+    removeTask: (state, action: PayloadAction<string>): State => {
+      const sprints = state.sprints.map((sprint) => {
+        const newTasks =
+          sprint.tasks?.filter((task) => task.id !== action.payload) ?? [];
+        return { ...sprint, tasks: [...newTasks] };
+      });
+      return { ...state, sprints };
     },
-    // TODO gérer la fonction update en évitant de muter les données
-    setUpdateTask: (state, action: PayloadAction<Partial<TaskModel>>) => {
-      const taskFound = state.sprint.tasks?.find(
-        (task) => task.id === action.payload.id
-      );
-      if (taskFound)
-        state.sprint.tasks?.map((task) => [{ ...task }, { ...action.payload }]);
+    setUpdateTask: (state, action: PayloadAction<TaskModel>) => {
+      const sprints = state.sprints.map((sprint) => {
+        const newTasks =
+          sprint.tasks?.map((task) => {
+            if (task.id === action.payload.id)
+              return { ...task, ...action.payload };
+            return task;
+          }) ?? [];
+        return { ...sprint, tasks: [...newTasks] };
+      });
+
+      return { ...state, sprints };
     },
 
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -65,7 +73,6 @@ export const sprintSlice = createSlice({
 });
 
 export const {
-  getSprint,
   getSprintsStart,
   getSprintsSuccess,
   getSprintsFailure,

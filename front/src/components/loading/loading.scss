@@ -5,6 +5,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &.data-loading {
+    background: rgb(12 13 40 / 51%);
+    position: absolute;
+    z-index: 100;
+    opacity: 0.3;
+  }
+  &.none {
+    display: none;
+  }
   .point {
     width: 20px;
     height: 20px;

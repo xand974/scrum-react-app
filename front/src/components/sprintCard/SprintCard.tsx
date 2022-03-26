@@ -19,8 +19,9 @@ export default function SprintCard({ item, id }: SprintCardType) {
   }, [item]);
 
   const handleOpenModal = () => {
+    const task = { ...item, id };
+    dispatch(setModalData(task));
     dispatch(setOpenModal(true));
-    dispatch(setModalData({ ...item, id }));
   };
 
   return (
@@ -32,7 +33,7 @@ export default function SprintCard({ item, id }: SprintCardType) {
         </button>
       </div>
       <div className="sprint-card-body">
-        <p className="sprint-card_title">{item.task}</p>
+        <p className="sprint-card_title">{item.name}</p>
         <div className="card-users">
           {users &&
             users?.map((user, key) => (

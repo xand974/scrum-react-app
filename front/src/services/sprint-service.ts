@@ -2,7 +2,6 @@ import {
   addDoc,
   collection,
   doc,
-  getDoc,
   getDocs,
   orderBy,
   query,
@@ -16,7 +15,6 @@ import {
   getSprintsFailure,
   getSprintsStart,
   getSprintsSuccess,
-  getSprint as getCurrentSprint,
 } from "../context/sprintSlice";
 
 export const createSprint = async (
@@ -49,17 +47,6 @@ export const getSprints = async (dispatch: AppDispatch) => {
   }
 };
 
-export const getSprint = async (dispatch: AppDispatch, id: string) => {
-  try {
-    const docRef = doc(db, "sprints", id);
-    const res = await getDoc(docRef);
-
-    dispatch(getCurrentSprint(res.data() as SprintModel));
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const createReview = async (review: string, id: string) => {
   try {
     const docRef = doc(db, "sprints", id);
@@ -68,4 +55,18 @@ export const createReview = async (review: string, id: string) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const getSprint = (
+  sprints: SprintModel[],
+  SPRINT_ID: string,
+  setSprint: React.Dispatch<React.SetStateAction<SprintModel>>
+) => {
+  const sprintFound =
+    sprints.find((sprint) => sprint.id === SPRINT_ID) ?? ({} as SprintModel);
+
+  setSprint((prev) => ({
+    ...prev,
+    ...sprintFound,
+  }));
 };

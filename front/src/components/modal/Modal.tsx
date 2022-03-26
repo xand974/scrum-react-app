@@ -30,10 +30,18 @@ export default function Modal() {
     });
   };
 
+  const handleUpdate = () => {
+    if (!updatedTask.id) {
+      updatedTask.id = modalData.id;
+    }
+    updateTask(SPRINT_ID, updatedTask, dispatch);
+    setUpdatedTask({} as TaskModel);
+  };
+
   return (
     <div className={`modal ${openModal ? "active" : ""}`}>
       <div className="modal-header">
-        <h1>{modalData?.task}</h1>
+        <h1>{modalData?.name}</h1>
         <button
           className="modal-croix"
           onClick={() => dispatch(setOpenModal(false))}
@@ -46,19 +54,7 @@ export default function Modal() {
         <form className="modal-form" onSubmit={(e) => e.preventDefault()}>
           <div className="modal-form-container">
             <label htmlFor="name" className="modal-label">
-              Task Name
-            </label>
-            <input
-              type="text"
-              className="modal-input"
-              placeholder={modalData?.task}
-              name="task"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="modal-form-container">
-            <label htmlFor="name" className="modal-label">
-              Dev
+              Thèmes
             </label>
             <input
               type="text"
@@ -66,6 +62,20 @@ export default function Modal() {
               placeholder={modalData?.job}
               name="job"
               onChange={handleChange}
+              value={updatedTask.job ?? ""}
+            />
+          </div>
+          <div className="modal-form-container">
+            <label htmlFor="name" className="modal-label">
+              Nom de la tâche
+            </label>
+            <input
+              type="text"
+              className="modal-input"
+              placeholder={modalData?.name}
+              name="name"
+              onChange={handleChange}
+              value={updatedTask.name ?? ""}
             />
           </div>
           <span className="current-state-text">
@@ -77,16 +87,14 @@ export default function Modal() {
             id="state"
             onChange={handleChange}
             className="modal-select"
+            value={updatedTask.state ?? ""}
           >
             <option value="backlog">Backlog</option>
             <option value="pending">Pending</option>
             <option value="check">Check</option>
             <option value="fait">Fait</option>
           </select>
-          <button
-            className="modal-form_btn"
-            onClick={() => updateTask(SPRINT_ID, updatedTask, dispatch)}
-          >
+          <button className="modal-form_btn" onClick={handleUpdate}>
             Mettre à jour
           </button>
           <button

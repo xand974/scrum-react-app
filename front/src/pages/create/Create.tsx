@@ -17,6 +17,7 @@ export default function Create() {
       year: "numeric",
     }),
     tasks: [],
+    states: ["backlog", "fait", "pending", "check"],
   } as SprintModel;
 
   const [sprint, setSprint] = useState<SprintModel>(sprintInit);

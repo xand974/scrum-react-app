@@ -1,22 +1,22 @@
 import "./review.scss";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import Layout from "../../components/layout/Layout";
 import { useAppSelector } from "../../hook";
 import AddReview from "./components/AddReview";
-import { getSprint, createReview } from "../../services/sprint-service";
+import { createReview, getSprint } from "../../services/sprint-service";
+import { SprintModel } from "../../types/index";
 
 export default function Review() {
   const [review, setReview] = useState("");
+  const [sprint, setSprint] = useState({} as SprintModel);
   const location = useLocation();
-  const { sprint } = useAppSelector((state) => state.sprints);
+  const { sprints } = useAppSelector((state) => state.sprints);
   const SPRINT_ID = location.pathname.split("/")[2];
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    getSprint(dispatch, SPRINT_ID);
-  }, [dispatch, SPRINT_ID]);
+    getSprint(sprints, SPRINT_ID, setSprint);
+  }, [SPRINT_ID, sprints]);
 
   const handleCreate = () => {
     createReview(review, SPRINT_ID);
