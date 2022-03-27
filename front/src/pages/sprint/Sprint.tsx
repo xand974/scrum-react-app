@@ -19,6 +19,7 @@ export default function Sprint() {
   const location = useLocation();
   const SPRINT_ID = location.pathname.split("/")[2];
   const { sprints, loading } = useAppSelector((state) => state.sprints);
+
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -30,6 +31,7 @@ export default function Sprint() {
     });
   };
 
+  //#region  useEffects
   useEffect(() => {
     getSprints(dispatch);
   }, [dispatch]);
@@ -37,7 +39,8 @@ export default function Sprint() {
   useEffect(() => {
     getSprint(sprints, SPRINT_ID, setSprint);
   }, [sprints, SPRINT_ID]);
-
+  //#endregion
+  //#region events
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     let value = Array.from(
       e.target.selectedOptions,
@@ -59,7 +62,7 @@ export default function Sprint() {
     createTask(sprint.name, task, SPRINT_ID, dispatch);
     setTask({} as TaskModel);
   };
-
+  //#endregion
   return (
     <Layout loading={loading}>
       <div className="sprint">
@@ -73,6 +76,7 @@ export default function Sprint() {
               <h1 className="sprint-infos_title">{sprint.name}</h1>
               {openAddTask ? (
                 <AddTask
+                  states={sprint.states}
                   task={task}
                   handleChange={handleChange}
                   handleClick={handleClick}
@@ -102,11 +106,14 @@ export default function Sprint() {
         <div className="bottom">
           <div className="list">
             {sprint.states?.map((state, index) => (
-              <SprintCategory
-                SPRINT_ID={sprint.id!}
-                key={index}
-                state={state}
-              />
+              <>
+                <SprintCategory
+                  SPRINT_ID={sprint.id!}
+                  key={sprint.id!}
+                  state={state}
+                />
+                <div className="divider" key={index}></div>
+              </>
             ))}
           </div>
         </div>

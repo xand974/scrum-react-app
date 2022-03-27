@@ -81,15 +81,19 @@
   .bottom {
     background: var(--light-blue);
     height: 75%;
-    overflow-y: scroll;
+    overflow: scroll;
     display: flex;
     padding-top: var(--spacing-lg);
+
     .list {
-      width: var(--width-x);
-      margin: auto;
+      margin: 0 20px;
       height: 100%;
       display: flex;
       justify-content: space-between;
+      .divider {
+        height: 100%;
+        width: 80px;
+      }
     }
   }
 }

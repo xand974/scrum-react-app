@@ -3,6 +3,8 @@
   flex-direction: column;
   flex: 1;
   position: relative;
+  width: 350px;
+  transition: all 0.3s ease;
   .top {
     flex: 1;
     .sprint-cat_text {

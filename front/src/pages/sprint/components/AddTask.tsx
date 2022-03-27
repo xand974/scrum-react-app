@@ -1,14 +1,17 @@
 import React from "react";
 import { ChangeEvent } from "react";
 import { TaskModel } from "../../../types/index";
+import { capitalize } from "../../../helpers/string-helper";
 
 type AddTaskType = {
   handleChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   handleSelect: (e: ChangeEvent<HTMLSelectElement>) => void;
   handleClick: () => void;
   task: TaskModel;
+  states: string[];
 };
 export default function AddTask({
+  states,
   handleChange,
   handleSelect,
   handleClick,
@@ -55,10 +58,11 @@ export default function AddTask({
         defaultValue="backlog"
         value={task.state ?? ""}
       >
-        <option value="backlog">Backlog</option>
-        <option value="pending">Pending</option>
-        <option value="check">Check</option>
-        <option value="fait">Fait</option>
+        {states.map((state, index) => (
+          <option value={state} key={index}>
+            {capitalize(state)}
+          </option>
+        ))}
       </select>
       <button className="add-task-btn" onClick={handleClick}>
         Ajouter
