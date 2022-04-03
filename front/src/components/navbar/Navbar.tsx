@@ -6,10 +6,43 @@ import { getUser } from "../../services/user-service";
 import { logout } from "../../services/login-service";
 import { Link, useNavigate } from "react-router-dom";
 import { UserModel } from "../../types/index";
+import MenuContext from "../menu-context/MenuContext";
 export default function Navbar() {
   const [user, setUser] = useState<UserModel | null>(null);
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
+  const menuItems = [
+    {
+      text: "Edit profile",
+      tag: "edit-profile",
+      icon: "Edit",
+    },
+    {
+      text: "Create a sprint",
+      tag: "create-a-sprint",
+      icon: "Add",
+    },
+    {
+      text: "Logout",
+      tag: "logout",
+      icon: "Logout",
+    },
+  ];
+
+  const handleClick = (tag: string) => {
+    switch (tag) {
+      case "edit-profile":
+        // TODO edit profile page
+        alert("edit profile");
+        break;
+      case "create-a-sprint":
+        navigate("/create");
+        break;
+      case "logout":
+        logout(navigate);
+        break;
+    }
+  };
 
   useEffect(() => {
     if (auth !== null) getUser(auth?.currentUser?.uid!!, setUser);
@@ -42,17 +75,15 @@ export default function Navbar() {
               />
               <span className="profile-text">{user?.email}</span>
               <div className={`dropdown-items ${hover ? "active" : ""}`}>
-                <form
-                  className="logout-form"
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  <button
-                    className="logout-btn"
-                    onClick={() => logout(navigate)}
-                  >
-                    Logout
-                  </button>
-                </form>
+                {menuItems.map((item, index) => (
+                  <MenuContext
+                    key={index}
+                    text={item.text}
+                    tag={item.tag}
+                    handleClick={handleClick}
+                    icon={item.icon}
+                  />
+                ))}
               </div>
             </div>
           </div>
