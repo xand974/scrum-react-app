@@ -58,13 +58,13 @@ export default function AddTask({
         defaultValue="backlog"
         value={task.state ?? ""}
       >
-        {states.map((state, index) => (
+        {states?.map((state, index) => (
           <option value={state} key={index}>
             {capitalize(state)}
           </option>
         ))}
       </select>
-      <button className="add-task-btn" onClick={handleClick}>
+      <button className="add-task-btn" onClick={() => handleClick()}>
         Ajouter
       </button>
     </form>
